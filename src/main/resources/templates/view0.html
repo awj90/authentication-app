@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<!--
+	TODO: Task 1, Task 2, Task 3
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <form method="POST" data-th-action="@{/login}" data-th-object="${user}">
+      <h2>Please Login</h2>
+
+      <table>
+        <tr>
+          <td>
+            <label for="username">Username:</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              id="username"
+              size="30"
+              placeholder="Please type in your username"
+              data-th-field="*{username}"
+              required
+            />
+          </td>
+        </tr>
+        <tr data-th-if="${#fields.hasErrors('username')}">
+          <td></td>
+          <td>
+            <span
+              data-th-errorclass="error"
+              data-th-errors="*{username}"
+            ></span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="password">Password:</label>
+          </td>
+          <td>
+            <input
+              type="password"
+              id="password"
+              size="30"
+              placeholder="Please type in your password"
+              data-th-field="*{password}"
+              required
+            />
+          </td>
+        </tr>
+        <tr data-th-if="${#fields.hasErrors('password')}">
+          <td></td>
+          <td>
+            <span
+              data-th-errorclass="error"
+              data-th-errors="*{password}"
+            ></span>
+          </td>
+        </tr>
+        <div data-th-if="${user.remainingAttempts lt 3}">
+          <tr>
+            <td>
+              What is
+              <span data-th-text="${captcha.randnum1}"></span>
+              <span data-th-text="${captcha.operation}"></span>
+              <span data-th-text="${captcha.randnum2}"></span>
+              ?
+            </td>
+          </tr>
+          <tr>
+            <td>Answer:</td>
+            <td>
+              <input
+                type="number"
+                size="30"
+                placeholder="Answer"
+                data-th-field="*{captchaAnswer}"
+                required
+              />
+            </td>
+          </tr>
+        </div>
+        <tr>
+          <td></td>
+          <td>
+            <button type="submit">Login</button>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </body>
+</html>
